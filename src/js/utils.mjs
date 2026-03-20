@@ -2,17 +2,17 @@
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }
-// or a more concise version if you are into that sort of thing:
-// export const qs = (selector, parent = document) => parent.querySelector(selector);
 
 // retrieve data from localstorage
 export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
+
 // save data to local storage
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
+
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
   qs(selector).addEventListener("touchend", (event) => {
@@ -21,25 +21,16 @@ export function setClick(selector, callback) {
   });
   qs(selector).addEventListener("click", callback);
 }
-// src/js/utils.mjs
+
+// get URL parameter
 export function getParam(param) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   return urlParams.get(param);
 }
 
-export function setLocalStorage(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
-}
-
 /**
  * Renders a list of items using a template function.
- *
- * @param {Function} templateFn - Function that returns an HTML string for a single item
- * @param {HTMLElement} parentElement - Element to insert the HTML into
- * @param {Array} list - Array of data objects to render
- * @param {string} [position="afterbegin"] - Where to insert the HTML (default: "afterbegin")
- * @param {boolean} [clear=false] - Whether to clear the parentElement before inserting
  */
 export function renderListWithTemplate(
   templateFn,
@@ -56,4 +47,19 @@ export function renderListWithTemplate(
 
   const htmlStrings = list.map(templateFn);
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
+}
+
+export async function loadHeaderFooter() {
+  const header = document.querySelector("header");
+  const footer = document.querySelector("footer");
+
+  if (header) {
+    const headerResp = await fetch("/partials/header.html");
+    header.innerHTML = await headerResp.text();
+  }
+
+  if (footer) {
+    const footerResp = await fetch("/partials/footer.html");
+    footer.innerHTML = await footerResp.text();
+  }
 }
