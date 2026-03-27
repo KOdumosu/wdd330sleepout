@@ -257,7 +257,27 @@ button {
   }
 }
 
+.newsletter {
+  text-align: center;
+  margin: 2rem;
+}
+
+.newsletter input {
+  padding: 0.5rem;
+  width: 250px;
+}
+
+.newsletter button {
+  padding: 0.5rem 1rem;
+}
+
+#message {
+  margin-top: 10px;
+}
+
 footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+
+
